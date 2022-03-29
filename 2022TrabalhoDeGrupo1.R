@@ -89,6 +89,24 @@ Price_freq <- Freq(bikes$Price)
 
 # Cubic capacity Eletrico vs Combustivel
 
+#anos de garantia VS ano de criação
+
+#anos de garantia vs Eletrico/Combustivl
+
+#Fuel Capacity vs ano de criação
+
+#Price Eletrico VS Combustivel
+
+#Cubic Capacity Petrol VS Diesel
+
+#Cubic capacity VS Engine type
+
+#Engine type VS price
+
+#Price Petrol VS Diesel
+
+#Price VS Manufactured Year
+
 # Adicionar mais
 
 
