@@ -61,15 +61,9 @@ legend("right", bike_company_freq$level,
        cex = 0.45, fill = terrain.colors(length(bike_company_freq$level)))
 
 #Manufactured_year
-#TRATAR DISTO
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
-hist(bikes$Manufactured_year)
-
-Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
-hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
-barplot(Manufactured_year_freq$freq, main="Manufactured Year", names.arg=Manufactured_year_freq$level
-        bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
-
+Manufactured_year_outlier_filter <- which(bikes$Manufactured_year>2000 & bikes$Manufactured_year<2030)
+hist(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 
 #Engine_warranty
 Engine_warranty_freq <- Freq(bikes$Engine_warranty)
@@ -101,8 +95,18 @@ Price_freq <- Freq(bikes$Price)
 
 ### Comparações / Relações entre variaveis:
 #posiveis comparações para estudo:
+Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
+hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
+bikes$`CC(Cubic capacity)`[eletricos]
 
 # Cubic capacity Eletrico vs Combustivel
+bikes$Fuel_type
+eletricos <- which(bikes$Fuel_type== "Electricity")
+Petrol <-which(bikes$Fuel_type== "Petrol")
+bikes$`CC(Cubic capacity)`[eletricos]
+bikes$`CC(Cubic capacity)`[Petrol]
+mean(insurance$charges[obesos])
+mean(insurance$charges[nao_obesos])
 
 #anos de garantia VS ano de criação
 
@@ -139,6 +143,7 @@ mean(bikes$`CC(Cubic capacity)`)
 ###Verificação de outliers ( indicar se existe ou não para depois de mostrar no relatorio)
 #Apenas para variaveis em que faça sentido (quantitativas)
 boxplot(bikes$`CC(Cubic capacity)`) # Existe outliers
+boxplot(bikes$Manufactured_year) # Existe outliers
 
 ### Mediana
 #Apenas para variaveis em que faça sentido (quantitativas)
