@@ -15,10 +15,10 @@ bikesRawBD <- read_excel("C:/R/Bike_Price_Prediction.xlsx",sheet = "Sheet1",col_
 #bikesRawBD <- read_excel("PC RUI Path",sheet = "Sheet1",col_names = TRUE)
 #bikesRawBD <- read_excel("PC Matheus Path",sheet = "Sheet1",col_names = TRUE)
 
-#remover campos não utilizados
+#remover campos nï¿½o utilizados
 bikes = subset(bikesRawBD, select = -c(Bike_model,S.no)) 
 
-#função para remover os ultimos x characteres de uma variavel, ex: "220CC" -> "220"
+#funï¿½ï¿½o para remover os ultimos x characteres de uma variavel, ex: "220CC" -> "220"
 remove_n_trailing_characters <- function(data_to_change, number_of_trailing_characters) {
   reg_expresion <- paste('.{',number_of_trailing_characters,"}$", sep="") # criar regular expression
   gsub(reg_expresion, '', data_to_change)
@@ -61,12 +61,19 @@ legend("right", bike_company_freq$level,
        cex = 0.45, fill = terrain.colors(length(bike_company_freq$level)))
 
 #Manufactured_year
+#TRATAR DISTO
+#avisar no relatorio que eliminei o outlier
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
 Manufactured_year_outlier_filter <- which(bikes$Manufactured_year>2000 & bikes$Manufactured_year<2030)
 hist(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 
+
 #Engine_warranty
+#avisar no relatorio que eliminei o outlier
 Engine_warranty_freq <- Freq(bikes$Engine_warranty)
+hist(bikes$Engine_warranty)
+Engine_warranty_Outliers_Filtrados <- which(bikes$Engine_warranty<20)
+hist(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 
 #Engine_type
 Engine_type_freq <- Freq(bikes$Engine_type)
@@ -93,8 +100,8 @@ Fuel_Capacity <- Freq(bikes$Fuel_Capacity)
 Price_freq <- Freq(bikes$Price)
 
 
-### Comparações / Relações entre variaveis:
-#posiveis comparações para estudo:
+### Comparaï¿½ï¿½es / Relaï¿½ï¿½es entre variaveis:
+#posiveis comparaï¿½ï¿½es para estudo:
 Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
 hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
 bikes$`CC(Cubic capacity)`[eletricos]
@@ -108,11 +115,11 @@ bikes$`CC(Cubic capacity)`[Petrol]
 mean(insurance$charges[obesos])
 mean(insurance$charges[nao_obesos])
 
-#anos de garantia VS ano de criação
+#anos de garantia VS ano de criaï¿½ï¿½o
 
 #anos de garantia vs Eletrico/Combustivl
 
-#Fuel Capacity vs ano de criação
+#Fuel Capacity vs ano de criaï¿½ï¿½o
 
 #Price Eletrico VS Combustivel
 
@@ -131,26 +138,30 @@ mean(insurance$charges[nao_obesos])
 # Adicionar mais
 
 
-### Desvio Padrão
-#Apenas para variaveis em que faça sentido (quantitativas)
+### Desvio Padrï¿½o
+#Apenas para variaveis em que faï¿½a sentido (quantitativas)
 sd(bikes$`CC(Cubic capacity)`)
+sd(bikes$`Manufactured_year`)
+sd(bikes$`Engine_warranty`)
+Engine_warranty_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
 
-### Média
-#Apenas para variaveis em que faça sentido (quantitativas)
+
+### Mï¿½dia
+#Apenas para variaveis em que faï¿½a sentido (quantitativas)
 mean(bikes$`CC(Cubic capacity)`)
 
 
-###Verificação de outliers ( indicar se existe ou não para depois de mostrar no relatorio)
-#Apenas para variaveis em que faça sentido (quantitativas)
+###Verificaï¿½ï¿½o de outliers ( indicar se existe ou nï¿½o para depois de mostrar no relatorio)
+#Apenas para variaveis em que faï¿½a sentido (quantitativas)
 boxplot(bikes$`CC(Cubic capacity)`) # Existe outliers
 boxplot(bikes$Manufactured_year) # Existe outliers
 
 ### Mediana
-#Apenas para variaveis em que faça sentido (quantitativas)
+#Apenas para variaveis em que faï¿½a sentido (quantitativas)
 median(bikes$`CC(Cubic capacity)`)
 
 ### Moda
-#Função para obter a moda:
+#Funï¿½ï¿½o para obter a moda:
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
