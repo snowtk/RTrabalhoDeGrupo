@@ -1,3 +1,4 @@
+
 #Rodar para instalar as packages
 install.packages("readxl")
 install.packages("DescTools")
@@ -9,8 +10,8 @@ library("DescTools")
 library("ggplot2")
 library("agricolae")
 
-#Import da base de dados
-bikesRawBD <- read_excel("C:/lisp/Bike_Price_Prediction.xlsx",sheet = "Sheet1",col_names = TRUE)
+#Import da base de dados 
+bikesRawBD <- read_excel("C:/R/Bike_Price_Prediction.xlsx",sheet = "Sheet1",col_names = TRUE)
 #bikesRawBD <- read_excel("PC RUI Path",sheet = "Sheet1",col_names = TRUE)
 #bikesRawBD <- read_excel("PC Matheus Path",sheet = "Sheet1",col_names = TRUE)
 
@@ -53,8 +54,22 @@ bikes$`CC(Cubic capacity)` <- as.numeric(bikes$`CC(Cubic capacity)`)
 #Bike Company
 bike_company_freq <- Freq(bikes$Bike_company)
 
+bike_company_freq <- Freq(bikes$bike_company_freq)
+pie(bike_company_freq$perc, labels = paste(round(bike_company_freq$perc*100),"%"),
+    main="Pie Chart of Bike Company", col = terrain.colors(length(bike_company_freq$level)))
+legend("right", bike_company_freq$level,
+       cex = 0.45, fill = terrain.colors(length(bike_company_freq$level)))
+
 #Manufactured_year
+#TRATAR DISTO
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
+hist(bikes$Manufactured_year)
+
+Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
+hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
+barplot(Manufactured_year_freq$freq, main="Manufactured Year", names.arg=Manufactured_year_freq$level
+        bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
+
 
 #Engine_warranty
 Engine_warranty_freq <- Freq(bikes$Engine_warranty)
@@ -107,6 +122,8 @@ Price_freq <- Freq(bikes$Price)
 
 #Price VS Manufactured Year
 
+#Price vs Bike_company
+
 # Adicionar mais
 
 
@@ -140,5 +157,3 @@ getmode(bikes$`CC(Cubic capacity)`)
 ### Quartis
 
 quantile(bikes$`CC(Cubic capacity)`)
-
-
