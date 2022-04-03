@@ -62,17 +62,18 @@ legend("right", bike_company_freq$level,
 
 #Manufactured_year
 #TRATAR DISTO
+#avisar no relatorio que eliminei o outlier
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
-hist(bikes$Manufactured_year)
-
-Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
-hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
-barplot(Manufactured_year_freq$freq, main="Manufactured Year", names.arg=Manufactured_year_freq$level
-        bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
+Manufactured_year_outlier_filter <- which(bikes$Manufactured_year>2000 & bikes$Manufactured_year<2030)
+hist(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 
 
 #Engine_warranty
+#avisar no relatorio que eliminei o outlier
 Engine_warranty_freq <- Freq(bikes$Engine_warranty)
+hist(bikes$Engine_warranty)
+Engine_warranty_Outliers_Filtrados <- which(bikes$Engine_warranty<20)
+hist(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 
 #Engine_type
 Engine_type_freq <- Freq(bikes$Engine_type)
@@ -130,6 +131,10 @@ Price_freq <- Freq(bikes$Price)
 ### Desvio Padrão
 #Apenas para variaveis em que faça sentido (quantitativas)
 sd(bikes$`CC(Cubic capacity)`)
+sd(bikes$`Manufactured_year`)
+sd(bikes$`Engine_warranty`)
+Engine_warranty_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
+
 
 ### Média
 #Apenas para variaveis em que faça sentido (quantitativas)
