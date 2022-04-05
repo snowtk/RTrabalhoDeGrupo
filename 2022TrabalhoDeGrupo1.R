@@ -106,34 +106,39 @@ hist(bikes$Price)
 ### Comparacoes / Relacoes entre variaveis:
 #posiveis comparacoes para estudo:
 
-Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
-hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
-bikes$`CC(Cubic capacity)`[eletricos]
-
 # Cubic capacity Eletrico vs Combustivel
 bikes$Fuel_type
 eletricos <- which(bikes$Fuel_type== "Electricity")
-Petrol <-which(bikes$Fuel_type== "Petrol")
-bikes$`CC(Cubic capacity)`[eletricos]
-bikes$`CC(Cubic capacity)`[Petrol]
-mean(insurance$charges[obesos])
-mean(insurance$charges[nao_obesos])
+mean(bikes$`CC(Cubic capacity)`[eletricos])
+mean(bikes$`CC(Cubic capacity)`[Petrol])
+max(bikes$`CC(Cubic capacity)`[eletricos])
+max(bikes$`CC(Cubic capacity)`[Petrol])
+hist(bikes$`CC(Cubic capacity)`[eletricos])
+hist(bikes$`CC(Cubic capacity)`[Petrol])
 
 #anos de garantia VS ano de cria��o
+Engine_warranty_before_2017 <- bikes$Engine_warranty[which(bikes$Manufactured_year>1850 & bikes$Manufactured_year<2017 & bikes$Engine_warranty != "NA") ]
+Engine_warranty_after_2016 <- bikes$Engine_warranty[which(bikes$Manufactured_year>2016 & bikes$Manufactured_year<2030& bikes$Engine_warranty != "NA" & bikes$Engine_warranty < 40) ]
+mean(Engine_warranty_before_2017)
+mean(Engine_warranty_after_2016)
+hist(Engine_warranty_before_2017)
+hist(Engine_warranty_after_2016)
 
 #anos de garantia vs Eletrico/Combustivl
 
 #Fuel Capacity vs ano de cria��o
 
 #Price Eletrico VS Combustivel
-
-#Cubic Capacity Petrol VS Diesel
+mean(bikes$Price[eletricos])
+mean(bikes$Price[Petrol])
+max(bikes$Price[eletricos])
+max(bikes$Price[Petrol])
+hist(bikes$Price[eletricos])
+hist(bikes$Price[Petrol])
 
 #Cubic capacity VS Engine type
 
 #Engine type VS price
-
-#Price Petrol VS Diesel
 
 #Price VS Manufactured Year
 
