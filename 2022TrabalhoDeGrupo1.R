@@ -123,6 +123,10 @@ mean(Engine_warranty_before_2017)
 mean(Engine_warranty_after_2016)
 hist(Engine_warranty_before_2017)
 hist(Engine_warranty_after_2016)
+mean_by_year_ew <- aggregate(bikes$Engine_warranty, list(bikes$Manufactured_year), FUN=mean)
+mean_by_year_ew_filter <- which(mean_by_year_ew$Group.1 > 1900 & mean_by_year_ew$Group.1 < 2030)
+barplot(mean_by_year_ew$x[mean_by_year_ew_filter], names.arg = mean_by_year_ew$Group.1[mean_by_year_ew_filter])
+#conclusão: o tempo de garantia tem se mantido estavel ao longo dos ultimos anos
 
 #anos de garantia vs Eletrico/Combustivl
 
@@ -133,10 +137,14 @@ mean(bikes$Price[eletricos])
 mean(bikes$Price[Petrol])
 max(bikes$Price[eletricos])
 max(bikes$Price[Petrol])
-hist(bikes$Price[eletricos])
-hist(bikes$Price[Petrol])
+hist(bikes$Price[Petrol], col="blue")
+hist(bikes$Price[eletricos], col="green")
+#conclusão, motas eletricas são muito mais caras em media, porem motas topo de gama a combustivel tem os maiores preços observados
 
 #Cubic capacity VS Engine type
+mean_by_Engine_type_CC <- aggregate(bikes$`CC(Cubic capacity)`, list(bikes$Engine_type), FUN=mean)
+barplot(mean_by_Engine_type_CC$x, names.arg = mean_by_Engine_type_CC$Group.1)
+#conclusão: motoress Dual Stroke são os mais potentes, sendo o resto dos modelos equiparaveis entre si
 
 #Engine type VS price
 
