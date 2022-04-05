@@ -111,20 +111,13 @@ bikes$Fuel_type
 eletricos <- which(bikes$Fuel_type== "Electricity")
 mean(bikes$`CC(Cubic capacity)`[eletricos])
 mean(bikes$`CC(Cubic capacity)`[Petrol])
-max(bikes$`CC(Cubic capacity)`[eletricos])
-max(bikes$`CC(Cubic capacity)`[Petrol])
 hist(bikes$`CC(Cubic capacity)`[eletricos])
 hist(bikes$`CC(Cubic capacity)`[Petrol])
 #conclusão, carros a combustivel são mais fortes
 
 #anos de garantia VS ano de criaï¿½ï¿½o
-Engine_warranty_before_2017 <- bikes$Engine_warranty[which(bikes$Manufactured_year>1850 & bikes$Manufactured_year<2017 & bikes$Engine_warranty != "NA") ]
-Engine_warranty_after_2016 <- bikes$Engine_warranty[which(bikes$Manufactured_year>2016 & bikes$Manufactured_year<2030& bikes$Engine_warranty != "NA" & bikes$Engine_warranty < 40) ]
-mean(Engine_warranty_before_2017)
-mean(Engine_warranty_after_2016)
-hist(Engine_warranty_before_2017)
-hist(Engine_warranty_after_2016)
-mean_by_year_ew <- aggregate(bikes$Engine_warranty, list(bikes$Manufactured_year), FUN=mean)
+bikes_copy <- bikes[which(bikes$Engine_warranty != "NA"),]
+mean_by_year_ew <- aggregate(bikes_copy$Engine_warranty, list(bikes_copy$Manufactured_year), FUN=mean)
 mean_by_year_ew_filter <- which(mean_by_year_ew$Group.1 > 1900 & mean_by_year_ew$Group.1 < 2030)
 barplot(mean_by_year_ew$x[mean_by_year_ew_filter], names.arg = mean_by_year_ew$Group.1[mean_by_year_ew_filter])
 #conclusão: o tempo de garantia tem se mantido estavel ao longo dos ultimos anos
