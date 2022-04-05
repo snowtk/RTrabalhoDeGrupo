@@ -40,7 +40,7 @@ bikes$`CC(Cubic capacity)` <- as.numeric(bikes$`CC(Cubic capacity)`)
 #Engine_type          - Qualitativa Nominal
 #Fuel_type            - Qualitativa Nominal
 #CC(Cubic capacity)   - Quantitativa Continua (not 100% sure)
-#Fuel_Capacity        - No Clue
+#Fuel_Capacity        - Quantitativa discreta
 #Price                - Quantitativa Continua
 
 #quantitativo -> histograma ou polygno de freq, polygon.freq
@@ -115,6 +115,7 @@ max(bikes$`CC(Cubic capacity)`[eletricos])
 max(bikes$`CC(Cubic capacity)`[Petrol])
 hist(bikes$`CC(Cubic capacity)`[eletricos])
 hist(bikes$`CC(Cubic capacity)`[Petrol])
+#conclusão, carros a combustivel são mais fortes
 
 #anos de garantia VS ano de criaï¿½ï¿½o
 Engine_warranty_before_2017 <- bikes$Engine_warranty[which(bikes$Manufactured_year>1850 & bikes$Manufactured_year<2017 & bikes$Engine_warranty != "NA") ]
@@ -129,8 +130,23 @@ barplot(mean_by_year_ew$x[mean_by_year_ew_filter], names.arg = mean_by_year_ew$G
 #conclusão: o tempo de garantia tem se mantido estavel ao longo dos ultimos anos
 
 #anos de garantia vs Eletrico/Combustivl
+warranty_eletricos <- bikes$Engine_warranty[eletricos]
+warranty_eletricos_outlier_filter = which((warranty_eletricos < 30))
+mean(warranty_eletricos[warranty_eletricos_outlier_filter])
+petro_engine_warranty <- bikes$Engine_warranty[Petrol]
+petro_engine_warranty <- petro_engine_warranty[which(petro_engine_warranty !="NA" )]
+mean(petro_engine_warranty)
+hist(warranty_eletricos[warranty_eletricos_outlier_filter])
+hist(petro_engine_warranty)
+#conclusão, carros a combustivel tem mais anos de garantia
 
 #Fuel Capacity vs ano de criaï¿½ï¿½o
+bikes_copy <- bikes[which(bikes$Fuel_Capacity != "Battery"),]
+bikes_copy$Fuel_Capacity = as.numeric(remove_n_trailing_characters(bikes_copy$Fuel_Capacity,7))
+mean_by_Fuel_Capacity_Ano <- aggregate(bikes_copy$Fuel_Capacity, list(bikes_copy$Manufactured_year), FUN=mean)
+mean_by_Fuel_Capacity_Ano_filter <- which(mean_by_Fuel_Capacity_Ano$Group.1 > 1900 & mean_by_Fuel_Capacity_Ano$Group.1 < 2030)
+barplot(mean_by_Fuel_Capacity_Ano$x[mean_by_Fuel_Capacity_Ano_filter], names.arg = mean_by_Fuel_Capacity_Ano$Group.1[mean_by_Fuel_Capacity_Ano_filter])
+#conclusão: a media de combustivel tem se mantido estavel ao longo dosanos
 
 #Price Eletrico VS Combustivel
 mean(bikes$Price[eletricos])
@@ -147,11 +163,21 @@ barplot(mean_by_Engine_type_CC$x, names.arg = mean_by_Engine_type_CC$Group.1)
 #conclusão: motoress Dual Stroke são os mais potentes, sendo o resto dos modelos equiparaveis entre si
 
 #Engine type VS price
+mean_by_Engine_type_Price <- aggregate(bikes$Price, list(bikes$Engine_type), FUN=mean)
+barplot(mean_by_Engine_type_Price$x, names.arg = mean_by_Engine_type_Price$Group.1)
+#conclusão, Motores Dual Stroke são muito mais caros
 
 #Price VS Manufactured Year
+mean_by_Manufactured_Year_Price <- aggregate(bikes$Price, list(bikes$Manufactured_year), FUN=mean)
+mean_by_Manufactured_Year_Price_filter <- which(mean_by_Manufactured_Year_Price$Group.1 > 1900 & mean_by_Manufactured_Year_Price$Group.1 < 2030)
+barplot(mean_by_Manufactured_Year_Price$x[mean_by_Manufactured_Year_Price_filter], names.arg = mean_by_Manufactured_Year_Price$Group.1[mean_by_Manufactured_Year_Price_filter])
+#concusão: notsure vejam o grafico
 
 #Price vs Bike_company
-
+mean_by_Bike_Company_Price <- aggregate(bikes$Price, list(bikes$Bike_company), FUN=mean)
+mean_by_Manufactured_Year_Price_filter <- which(mean_by_Manufactured_Year_Price$Group.1 > 1900 & mean_by_Manufactured_Year_Price$Group.1 < 2030)
+barplot(mean_by_Bike_Company_Price$x, names.arg = mean_by_Bike_Company_Price$Group.1)
+#conclusao, ignorar este grafico impercetivel
 # Adicionar mais
 
 
