@@ -58,10 +58,9 @@ bike_company_freq <- Freq(bikes$bike_company_freq)
 pie(bike_company_freq$perc, labels = paste(round(bike_company_freq$perc*100),"%"),
     main="Pie Chart of Bike Company", col = terrain.colors(length(bike_company_freq$level)))
 legend("right", bike_company_freq$level,
-       cex = 0.45, fill = terrain.colors(length(bike_company_freq$level)))
+       cex = 0.7, fill = terrain.colors(length(bike_company_freq$level)))
 
 #Manufactured_year
-#TRATAR DISTO
 #avisar no relatorio que eliminei o outlier
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
 Manufactured_year_outlier_filter <- which(bikes$Manufactured_year>2000 & bikes$Manufactured_year<2030)
@@ -94,14 +93,19 @@ CC_freq <- Freq(bikes$`CC(Cubic capacity)`)
 hist(bikes$`CC(Cubic capacity)`)
 
 #Fuel_Capacity
-Fuel_Capacity <- Freq(bikes$Fuel_Capacity)
+#avisar no relatorio que removemos os que tinham "battery"
+Fuel_capacity_Filtred <- which(bikes$Fuel_Capacity != "Battery")
+Fuel_capacity_No_Chars <- as.numeric(remove_n_trailing_characters(bikes$Fuel_Capacity[Fuel_capacity_Filtred],7))
+Fuel_Capacity <- Freq(Fuel_capacity_No_Chars)
+hist(Fuel_capacity_No_Chars)
 
 #Price
 Price_freq <- Freq(bikes$Price)
+hist(bikes$Price)
 
+### Comparacoes / Relacoes entre variaveis:
+#posiveis comparacoes para estudo:
 
-### Comparaï¿½ï¿½es / Relaï¿½ï¿½es entre variaveis:
-#posiveis comparaï¿½ï¿½es para estudo:
 Manufactured_year_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
 hist(bikes$Manufactured_year[Manufactured_year_Outliers_Filtrados])
 bikes$`CC(Cubic capacity)`[eletricos]
@@ -140,25 +144,37 @@ mean(insurance$charges[nao_obesos])
 
 ### Desvio Padrï¿½o
 #Apenas para variaveis em que faï¿½a sentido (quantitativas)
+sd(bikes$Manufactured_year)
+Engine_warranty_Outliers_Filtrados <- which(bikes$Engine_warranty!="NA")
+sd(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 sd(bikes$`CC(Cubic capacity)`)
-sd(bikes$`Manufactured_year`)
-sd(bikes$`Engine_warranty`)
-Engine_warranty_Outliers_Filtrados <- which(bikes$Manufactured_year>1000)
+sd(Fuel_capacity_No_Chars)
+sd(bikes$Price)
 
 
-### Mï¿½dia
+### Media
 #Apenas para variaveis em que faï¿½a sentido (quantitativas)
+mean(bikes$Manufactured_year)
+mean(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 mean(bikes$`CC(Cubic capacity)`)
-
+mean(Fuel_capacity_No_Chars)
+mean(bikes$Price)
 
 ###Verificaï¿½ï¿½o de outliers ( indicar se existe ou nï¿½o para depois de mostrar no relatorio)
 #Apenas para variaveis em que faï¿½a sentido (quantitativas)
-boxplot(bikes$`CC(Cubic capacity)`) # Existe outliers
 boxplot(bikes$Manufactured_year) # Existe outliers
+boxplot(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados]) # Não Existe outliers
+boxplot(bikes$`CC(Cubic capacity)`) # Existe outliers
+boxplot(Fuel_capacity_No_Chars) # existe poucos outliers
+boxplot(bikes$Price) # existe outliers
 
 ### Mediana
 #Apenas para variaveis em que faï¿½a sentido (quantitativas)
+median(bikes$Manufactured_year)
+median(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 median(bikes$`CC(Cubic capacity)`)
+median(Fuel_capacity_No_Chars)
+median(bikes$Price)
 
 ### Moda
 #Funï¿½ï¿½o para obter a moda:
@@ -166,10 +182,19 @@ getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
+getmode(bikes$Bike_company)
+getmode(bikes$Manufactured_year)
+getmode(bikes$Engine_warranty)
 getmode(bikes$Engine_type)
 getmode(bikes$Fuel_type)
 getmode(bikes$`CC(Cubic capacity)`)
+getmode(bikes$Fuel_Capacity)
+getmode(Fuel_capacity_No_Chars)
+getmode(bikes$Price)
 
 ### Quartis
-
+quantile(bikes$Manufactured_year)
+quantile(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 quantile(bikes$`CC(Cubic capacity)`)
+quantile(Fuel_capacity_No_Chars)
+quantile(bikes$Price)
