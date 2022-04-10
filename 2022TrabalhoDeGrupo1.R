@@ -35,20 +35,14 @@ bikes$`CC(Cubic capacity)` <- as.numeric(bikes$`CC(Cubic capacity)`)
 
 ### Variaveis Escolhidas: (preencher tipo)
 #bike_company         - Qualitativa Nominal
-#Manufactured_year    - Quantitativa Discreta (not 100% sure)
-#Engine_warranty      - Quantitativa Discreta (not 100% sure)
+#Manufactured_year    - Quantitativa Discreta 
+#Engine_warranty      - Quantitativa Discreta 
 #Engine_type          - Qualitativa Nominal
 #Fuel_type            - Qualitativa Nominal
-#CC(Cubic capacity)   - Quantitativa Continua (not 100% sure)
+#CC(Cubic capacity)   - Quantitativa Continua 
 #Fuel_Capacity        - Quantitativa discreta
 #Price                - Quantitativa Continua
 
-#quantitativo -> histograma ou polygno de freq, polygon.freq
-#qualitativa nominal -> grafico circular
-#exemplos:
-#barplot(bike_company_freq$freq, main="Company Distribution", names.arg=bike_company_freq$level)
-#pie(bike_company_freq$freq, labels = bike_company_freq$level, main="Pie Chart of Genders")
-#hist(insurance$children)
 
 ### Tabelas de Frequencia + graficos
 #Bike Company
@@ -64,14 +58,16 @@ legend("right", bike_company_freq$level,
 #avisar no relatorio que eliminei o outlier
 Manufactured_year_freq <- Freq(bikes$Manufactured_year)
 Manufactured_year_outlier_filter <- which(bikes$Manufactured_year>2000 & bikes$Manufactured_year<2030)
+Manufactured_year_freq_no_outlier <- Freq(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 hist(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 
 
 #Engine_warranty
 #avisar no relatorio que eliminei o outlier
 Engine_warranty_freq <- Freq(bikes$Engine_warranty)
-hist(bikes$Engine_warranty)
 Engine_warranty_Outliers_Filtrados <- which(bikes$Engine_warranty<20)
+Engine_warranty_freq_no_outlier <- Freq(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
+hist(bikes$Engine_warranty)
 hist(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 
 #Engine_type
@@ -146,9 +142,9 @@ mean(bikes$Price[eletricos])
 mean(bikes$Price[Petrol])
 max(bikes$Price[eletricos])
 max(bikes$Price[Petrol])
-hist(bikes$Price[Petrol], col="blue")
-hist(bikes$Price[eletricos], col="green")
-#conclusão, motas eletricas são muito mais caras em media, porem motas topo de gama a combustivel tem os maiores preços observados
+hist(bikes$Price[Petrol])
+hist(bikes$Price[eletricos])
+#conclusão, motas combustiveis são muito mais caras em media, porem motas topo de gama a combustivel tem os maiores preços observados
 
 #Cubic capacity VS Engine type
 mean_by_Engine_type_CC <- aggregate(bikes$`CC(Cubic capacity)`, list(bikes$Engine_type), FUN=mean)
@@ -202,6 +198,7 @@ boxplot(bikes$Price) # existe outliers
 
 ### Mediana
 #Apenas para variaveis em que faï¿½a sentido (quantitativas)
+median(bikes$Bike_company)
 median(bikes$Manufactured_year)
 median(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 median(bikes$`CC(Cubic capacity)`)
@@ -226,6 +223,7 @@ getmode(bikes$Price)
 
 ### Quartis
 quantile(bikes$Manufactured_year)
+quantile(bikes$Manufactured_year[Manufactured_year_outlier_filter])
 quantile(bikes$Engine_warranty[Engine_warranty_Outliers_Filtrados])
 quantile(bikes$`CC(Cubic capacity)`)
 quantile(Fuel_capacity_No_Chars)
